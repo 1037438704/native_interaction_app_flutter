@@ -46,8 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 String result =
                     await platform.invokeMethod("call_native_method");
                 setState(() {
-                  //这里将我们拿到回传的值 赋值给我们自己定义的  _result  然后打
-                  //印到控制台观察
                   print("_result ---->" + result);
                 });
               },
