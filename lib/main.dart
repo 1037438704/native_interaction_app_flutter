@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'channel/MyBasicMessageChannel.dart';
+import 'channel/MyEventChannel.dart';
+import 'channel/MyMethodChannel.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -28,9 +32,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const String CHINAL_NAME = "samples.flutter.study/call_native";
-  static const platform = const MethodChannel(CHINAL_NAME);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,17 +40,33 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('You have pushed the button this many times:'),
-            FlatButton(
-              child: Text("调用native 接口"),
-              onPressed: () async {
-                String result =
-                    await platform.invokeMethod("call_native_method");
-                setState(() {
-                  print("_result ---->" + result);
-                });
+            RaisedButton(
+              child: Text('BasicMessageChannel'), //用于传递字符串和半结构化的信息
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MyBasicMessageChannel()));
               },
             ),
+            SizedBox(height: 25),
+            RaisedButton(
+              child: Text('MethodChannel'), //用于传递方法调用（method invocation）
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MyMethodChannel()));
+              },
+            ),
+            SizedBox(height: 25),
+            RaisedButton(
+              child: Text('EventChannel'), //用于数据流（event streams）的通信
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MyEventChannel()));
+                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyEventChannel())).then((value){
+                //   print('_result' + value);
+                // });
+              },
+            ),
+            SizedBox(height: 25),
           ],
         ),
       ),
